@@ -1,6 +1,4 @@
 ;; Disable welcome screen
-
-
 (setq inhibit-startup-screen t)
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -37,9 +35,9 @@
 (setq package-list '(clojure-mode company rainbow-delimiters))
 
 ; list the repositories containing them
-(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(setq package-archives '(
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
 ; activate all the packages (in particular autoloads)
 (package-initialize)

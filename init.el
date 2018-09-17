@@ -4,10 +4,16 @@
 
 ;; Disable welcome screen
 (setq inhibit-startup-screen t)
+
+;; enable line number for all!
+(global-linum-mode t)
+
+;; backup/auto-save files
 (setq
   backup-by-copying t      ; don't clobber symlinks
   backup-directory-alist
-    '(("." . "~/.emacs.d/backups/"))    ; don't litter my fs tree
+    '(("." . "~/.emacs.d/backups/")
+      (,tramp-file-name-regexp nil))    ; don't litter my fs tree
     delete-old-versions t
   kept-new-versions 6
   kept-old-versions 2
@@ -15,6 +21,12 @@
 
 ;; UTF-8 as default encoding
 (set-language-environment "UTF-8")
+
+;; change tabs to 2 spaces width
+(setq tab-width 2)
+(setq default-tab-width 2)
+(setq-default js-indent-level 2)
+(setq-default js2-basic-offset 2)
 
 ;; Ctrl-h map to delete-backward
 (keyboard-translate ?\C-h ?\C-?);

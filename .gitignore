@@ -61,5 +61,8 @@ flycheck_*.el
 # directory configuration
 .dir-locals.el
 
+# Others
+.cache/
+games/
 
 # End of https://www.gitignore.io/api/emacs

@@ -21,7 +21,7 @@
 (global-set-key (kbd "C-?") 'help-command)
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
-                
+
 ;; backup/auto-save files
 (setq
   backup-by-copying t      ; don't clobber symlinks
@@ -81,12 +81,16 @@
     (package-refresh-contents)
     (package-install p)))
 
-;; configuring individual packages
+;; Configuring individual packages
 (show-paren-mode 1)
 
 ;; active wind-move!!
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
+
+;; set treemacs command to <f12>
+(require 'treemacs)
+(global-set-key [(f12)] 'treemacs)
 
 (require 'company)
 (global-company-mode)

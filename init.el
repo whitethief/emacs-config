@@ -1,7 +1,7 @@
 ;;; init -- Hugo's init file
 ;;; Commentary:
 ;;; Code:
-
+7
 ;; Disable welcome screen
 (setq inhibit-startup-screen t)
 
@@ -42,6 +42,9 @@
 ;; UTF-8 as default encoding
 (set-language-environment "UTF-8")
 
+;; Setting font
+(set-frame-font "Inconsolata 16" nil t)
+
 ;; change tabs to 2 spaces width
 (setq-default indent-tabs-mode nil) ;; use spaces, no tab chars
 (setq tab-width 2)
@@ -67,16 +70,21 @@
   (clojure-mode
    coffee-mode
    company
+   counsel
    feature-mode
    highlight-symbol
-   rainbow-delimiters
+   jade-mode
    flycheck
    flycheck-inline
+   ivy
    js2-mode
    js2-refactor
+   pug-mode
+   rainbow-delimiters
+   swiper
    treemacs
-   yaml-mode
-   xref-js2))
+   xref-js2
+   yaml-mode))
 
 (package-initialize)
 (when (not package-archive-contents)
@@ -130,6 +138,31 @@
 (global-set-key [(shift f3)] 'highlight-symbol-prev)
 (global-set-key [(meta f3)] 'highlight-symbol-query-replace)
 
+;; Ivy
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;; (global-set-key (kbd "C-x C-f") 'fzf)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+
+;; Adding to the exec-path $PATH
+(add-to-list 'exec-path "/usr/local/bin")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -137,7 +170,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
+    (fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

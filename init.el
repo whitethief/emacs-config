@@ -1,7 +1,7 @@
-;;; init -- Hugo's init file
+;; init -- Hugo's init file
 ;;; Commentary:
 ;;; Code:
-7
+
 ;; Disable welcome screen
 (setq inhibit-startup-screen t)
 
@@ -21,6 +21,11 @@
 (global-set-key (kbd "C-?") 'help-command)
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
+(global-set-key (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "<C-up>") 'shrink-window)
+(global-set-key (kbd "<C-down>") 'enlarge-window)
+(global-set-key (kbd "<C-left>") 'shrink-window-horizontally)
+(global-set-key (kbd "<C-right>") 'enlarge-window-horizontally)
 
 ;; backup/auto-save files
 (setq
@@ -43,7 +48,9 @@
 (set-language-environment "UTF-8")
 
 ;; Setting font
-(set-frame-font "Inconsolata 16" nil t)
+;; (set-frame-font "Inconsolata 16" nil t)
+(when (member "Monoid" (font-family-list))
+  (set-frame-font "Monoid 16" nil t))
 
 ;; change tabs to 2 spaces width
 (setq-default indent-tabs-mode nil) ;; use spaces, no tab chars
@@ -54,8 +61,11 @@
 
 ;; Setting my theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'soft-charcoal)
+;;(load-theme 'cyberpunk t)
 ;;(load-theme 'weyland-yutani t)
-(load-theme 'misterioso t)
+;;(load-theme 'misterioso t)
+;;(load-theme 'tron t)
 
 ;; Set font-size
 (set-face-attribute 'default nil :height 160)
@@ -71,7 +81,8 @@
    coffee-mode
    company
    counsel
-   feature-mode
+   cyberpunk-theme
+   dumb-jump
    highlight-symbol
    jade-mode
    flycheck
@@ -79,6 +90,7 @@
    ivy
    js2-mode
    js2-refactor
+   markdown-mode
    pug-mode
    rainbow-delimiters
    swiper
@@ -101,6 +113,15 @@
 ;; active wind-move!!
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
+
+;; I want cyberpunk theme and I wanted now
+;; (load-theme 'cyberpunk t)
+
+;; feature-mode -- set steps path
+;; (setq feature-step-search-path "test/features/step_definitions/**/*.rb")
+
+;; enable dumb-jump
+(dumb-jump-mode)
 
 ;; set treemacs command to <f12>
 (require 'treemacs)
@@ -147,7 +168,6 @@
 (global-set-key (kbd "<f6>") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-;; (global-set-key (kbd "C-x C-f") 'fzf)
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-find-library)
@@ -160,17 +180,25 @@
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
+;; fzf configuration
+(global-set-key (kbd "<f8>") 'fzf-git)
+
 ;; Adding to the exec-path $PATH
-(add-to-list 'exec-path "/usr/local/bin")
+;;(add-to-list 'exec-path "/usr/local/bin")
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" default)))
  '(package-selected-packages
    (quote
-    (fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
+    (soft-charcoal-theme cyberpunk-theme groovy-mode counsel-projectile projectile fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,3 +1,21 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" default)))
+ '(package-selected-packages
+   (quote
+    (hackernews haml-mode soft-charcoal-theme cyberpunk-theme groovy-mode counsel-projectile projectile fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
 ;; init -- Hugo's init file
 ;;; Commentary:
 ;;; Code:
@@ -22,10 +40,15 @@
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
 (global-set-key (kbd "RET") 'newline-and-indent)
+
+;; Mapping control+cursor to change window pane size
 (global-set-key (kbd "<C-up>") 'shrink-window)
 (global-set-key (kbd "<C-down>") 'enlarge-window)
 (global-set-key (kbd "<C-left>") 'shrink-window-horizontally)
 (global-set-key (kbd "<C-right>") 'enlarge-window-horizontally)
+
+;; Disable ctrl-x, ctrl-b
+(global-unset-key [(control x)(control b)])
 
 ;; backup/auto-save files
 (setq
@@ -61,7 +84,7 @@
 
 ;; Setting my theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'soft-charcoal)
+;;(load-theme 'soft-charcoal)
 ;;(load-theme 'cyberpunk t)
 ;;(load-theme 'weyland-yutani t)
 ;;(load-theme 'misterioso t)
@@ -71,6 +94,14 @@
 (set-face-attribute 'default nil :height 160)
 ;; Disable sound bell
 (setq visible-bell t)
+
+;; Other functions
+(defun kill-other-buffers ()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer 
+          (delq (current-buffer) 
+                (remove-if-not 'buffer-file-name (buffer-list)))))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -93,6 +124,7 @@
    markdown-mode
    pug-mode
    rainbow-delimiters
+   soft-charcoal-theme
    swiper
    treemacs
    xref-js2
@@ -116,6 +148,7 @@
 
 ;; I want cyberpunk theme and I wanted now
 ;; (load-theme 'cyberpunk t)
+(load-theme 'soft-charcoal)
 
 ;; feature-mode -- set steps path
 ;; (setq feature-step-search-path "test/features/step_definitions/**/*.rb")
@@ -187,21 +220,3 @@
 ;;(add-to-list 'exec-path "/usr/local/bin")
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" default)))
- '(package-selected-packages
-   (quote
-    (soft-charcoal-theme cyberpunk-theme groovy-mode counsel-projectile projectile fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

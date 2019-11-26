@@ -3,12 +3,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (spacemacs-dark)))
  '(custom-safe-themes
    (quote
-    ("6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" default)))
+    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" default)))
  '(package-selected-packages
    (quote
-    (hackernews haml-mode soft-charcoal-theme cyberpunk-theme groovy-mode counsel-projectile projectile fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
+    (paredit lush-theme puppet-mode spacemacs-theme httprepl dumb-jump dockerfile-mode docker com-css-sort transpose-frame hackernews haml-mode soft-charcoal-theme cyberpunk-theme groovy-mode counsel-projectile projectile fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -27,7 +28,7 @@
 (setq confirm-kill-emacs 'y-or-n-p)
 
 ;; disable ctrl-x ctrl-z that send emacs to the background
-(put 'suspend-frame 'disabled t)
+(global-unset-key (kbd "C-z"))
 
 ;; enable line number for all!
 (global-linum-mode t)
@@ -50,6 +51,10 @@
 ;; Disable ctrl-x, ctrl-b
 (global-unset-key [(control x)(control b)])
 
+
+;; Disable ctrl-x ctrl-z that minimizes emacs
+(global-unset-key [(control x)(control z)])
+
 ;; backup/auto-save files
 (setq
   backup-by-copying t      ; don't clobber symlinks
@@ -71,9 +76,12 @@
 (set-language-environment "UTF-8")
 
 ;; Setting font
+(when (member "Victor Mono" (font-family-list))
+  (set-frame-font "Victor Mono 16" nil t))
+
 ;; (set-frame-font "Inconsolata 16" nil t)
-(when (member "Monoid" (font-family-list))
-  (set-frame-font "Monoid 16" nil t))
+;; (when (member "Monoid" (font-family-list))
+;;   (set-frame-font "Monoid 16" nil t))
 
 ;; change tabs to 2 spaces width
 (setq-default indent-tabs-mode nil) ;; use spaces, no tab chars
@@ -124,6 +132,7 @@
    markdown-mode
    pug-mode
    rainbow-delimiters
+   spacemacs-theme
    soft-charcoal-theme
    swiper
    treemacs
@@ -147,8 +156,9 @@
   (windmove-default-keybindings))
 
 ;; I want cyberpunk theme and I wanted now
-;; (load-theme 'cyberpunk t)
-(load-theme 'soft-charcoal)
+;;(load-theme 'cyberpunk t)
+;;(load-theme 'soft-charcoal)
+(load-theme 'spacemacs-dark t)
 
 ;; feature-mode -- set steps path
 ;; (setq feature-step-search-path "test/features/step_definitions/**/*.rb")
@@ -214,9 +224,12 @@
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
 ;; fzf configuration
+(require 'fzf)
 (global-set-key (kbd "<f8>") 'fzf-git)
+(setq fzf/directory-start "~/src/biscoff")
 
 ;; Adding to the exec-path $PATH
 ;;(add-to-list 'exec-path "/usr/local/bin")
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+(put 'suspend-frame 'disabled nil)

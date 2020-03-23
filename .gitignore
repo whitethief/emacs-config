@@ -1,18 +1,6 @@
-# white.thief ignores
-
-.smex-items
-*~$
-places
-.recentf
-ido.last
-cider-history
-projectile-bookmarks.eld
-projectile.cache
-auto-save-list
-backups
-recentf
 
 # Created by https://www.gitignore.io/api/emacs
+# Edit at https://www.gitignore.io/?templates=emacs
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
@@ -61,8 +49,8 @@ flycheck_*.el
 # directory configuration
 .dir-locals.el
 
-# Others
-.cache/
-games/
+# network security
+/network-security.data
+
 
 # End of https://www.gitignore.io/api/emacs

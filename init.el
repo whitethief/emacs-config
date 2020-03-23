@@ -6,10 +6,11 @@
  '(custom-enabled-themes (quote (spacemacs-dark)))
  '(custom-safe-themes
    (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" default)))
+    ("04589c18c2087cd6f12c01807eed0bdaa63983787025c209b89c779c61c3a4c4" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "6124d0d4205ae5ab279b35ac6bc6a180fbb5ca594616e1e9a22097024c0a8a99" default)))
+ '(mpages-content-directory "/Users/hsandoval/usr/mpages.txt/")
  '(package-selected-packages
    (quote
-    (paredit lush-theme puppet-mode spacemacs-theme httprepl dumb-jump dockerfile-mode docker com-css-sort transpose-frame hackernews haml-mode soft-charcoal-theme cyberpunk-theme groovy-mode counsel-projectile projectile fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck flycheck-inline rainbow-delimiters company clojure-mode))))
+    (cherry-blossom-theme gnu-elpa-keyring-update mpages origami which-key flappymacs doom-themes paredit lush-theme puppet-mode spacemacs-theme httprepl dumb-jump dockerfile-mode docker com-css-sort transpose-frame hackernews haml-mode soft-charcoal-theme cyberpunk-theme groovy-mode counsel-projectile projectile fzf counsel swiper ivy yaml-mode highlight-symbol treemacs cider markdown-mode markdown-mode+ markdown-preview-mode exec-path-from-shell json-mode web-mode coffee-mode feature-mode jade-mode pug-mode company-shell tide reykjavik-theme rjsx-mode js2-refactor xref-js2 js2-mode emmet-mode flycheck-inline rainbow-delimiters company clojure-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -26,6 +27,9 @@
 
 ;; Ask for emacs to confirm exit
 (setq confirm-kill-emacs 'y-or-n-p)
+
+;; Anything that writes to the buffer while the region is active will overwrite it, including paste,
+(delete-selection-mode 1)
 
 ;; disable ctrl-x ctrl-z that send emacs to the background
 (global-unset-key (kbd "C-z"))
@@ -48,12 +52,18 @@
 (global-set-key (kbd "<C-left>") 'shrink-window-horizontally)
 (global-set-key (kbd "<C-right>") 'enlarge-window-horizontally)
 
+
+;; Making ctr-b ctrl-k the same as ctrl-b k
+(global-set-key (kbd "S-k") 'kill-buffer)
+
 ;; Disable ctrl-x, ctrl-b
 (global-unset-key [(control x)(control b)])
 
-
 ;; Disable ctrl-x ctrl-z that minimizes emacs
 (global-unset-key [(control x)(control z)])
+
+;; Disable ctrl-x m that opens the email composition
+(global-unset-key (kbd "C-x m"))
 
 ;; backup/auto-save files
 (setq
@@ -76,12 +86,8 @@
 (set-language-environment "UTF-8")
 
 ;; Setting font
-(when (member "Victor Mono" (font-family-list))
-  (set-frame-font "Victor Mono 16" nil t))
-
-;; (set-frame-font "Inconsolata 16" nil t)
-;; (when (member "Monoid" (font-family-list))
-;;   (set-frame-font "Monoid 16" nil t))
+(when (member "JetBrains Mono" (font-family-list))
+  (set-frame-font "JetBrains Mono 16" nil t))
 
 ;; change tabs to 2 spaces width
 (setq-default indent-tabs-mode nil) ;; use spaces, no tab chars
@@ -156,9 +162,13 @@
   (windmove-default-keybindings))
 
 ;; I want cyberpunk theme and I wanted now
-;;(load-theme 'cyberpunk t)
-;;(load-theme 'soft-charcoal)
-(load-theme 'spacemacs-dark t)
+(if (display-graphic-p) 
+    ;; (load-theme 'cyberpunk t)
+    (load-theme 'cherry-blossom)
+  (load-theme 'soft-charcoal))
+;; (load-theme 'cyberpunk t)
+;; (load-theme 'soft-charcoal)
+;;(load-theme 'spacemacs-dark t)
 
 ;; feature-mode -- set steps path
 ;; (setq feature-step-search-path "test/features/step_definitions/**/*.rb")
@@ -169,6 +179,12 @@
 ;; set treemacs command to <f12>
 (require 'treemacs)
 (global-set-key [(f12)] 'treemacs)
+
+(require 'coffee-mode)
+(add-hook 'coffee-mode-hook
+          (lambda ()
+            (set (make-local-variable 'tab-width) 2)
+            (set (make-local-variable 'indent-tabs-mode) t)))
 
 (require 'company)
 (global-company-mode)
@@ -209,6 +225,7 @@
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "C-x C-b") 'ivy-switch-buffer)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
@@ -233,3 +250,4 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 (put 'suspend-frame 'disabled nil)
+
